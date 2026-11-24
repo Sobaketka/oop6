@@ -8,21 +8,19 @@ UserDatabaseManager::UserDatabaseManager(string file) {
 
 vector<User> UserDatabaseManager::loadUsers() {
     vector<User> users;
-
     ifstream fin(filename);
-    string line;
+    string name, email, city;
 
-    while (getline(fin, line)) {
-        stringstream ss(line);
+    while (getline(fin, name, ',')) {
+        getline(fin, email, ',');
+        getline(fin, city);
+
         User user;
+        user.name = name;
+        user.email = email;
+        user.city = city;
 
-        getline(ss, user.name, ',');
-        getline(ss, user.email, ',');
-        getline(ss, user.city, ',');
-
-        if (!user.name.empty() && !user.email.empty() && !user.city.empty()) {
-            users.push_back(user);
-        }
+        users.push_back(user);
     }
 
     fin.close();
